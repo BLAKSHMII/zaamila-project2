@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Photon - Week 1</title>
+</head>
+<body>
+<h2>Photon WebSocket Test</h2>
+<p>Open browser console to see messages</p>
+
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script>
+    const socket = io();
+
+    socket.on('server_message', function(msg) {
+        console.log("Server:", msg.data);
+    });
+</script>
+</body>
+</html>
