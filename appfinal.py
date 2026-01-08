@@ -48,7 +48,7 @@ def stock_stream():
 # ---------------- ROUTE ----------------
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('indexfinal.html')
 
 # ---------------- SOCKET EVENTS ----------------
 @socketio.on("connect")
@@ -68,4 +68,5 @@ def handle_subscribe(data):
 # ---------------- RUN SERVER ----------------
 if __name__ == "__main__":
     socketio.run(app,debug=True)
+
 
