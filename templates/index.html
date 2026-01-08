@@ -1,19 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Photon - Week 1</title>
+    <title>Photon - Real-Time Stock Ticker</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
 <body>
-<h2>Photon WebSocket Test</h2>
-<p>Open browser console to see messages</p>
 
-<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<h2>📈 Real-Time Stock Prices</h2>
+
+<!-- Subscribe to a specific stock -->
+<input id="stock" placeholder="Enter Stock Symbol (e.g., AAPL)">
+<button onclick="subscribe()">Subscribe</button>
+
+<!-- Stock prices will appear here -->
+<ul id="prices"></ul>
+
 <script>
-    const socket = io();
+const socket = io();
+const prices = {};
 
-    socket.on('server_message', function(msg) {
-        console.log("Server:", msg.data);
-    });
+// Subscribe to a stock (Week-3 feature)
+function subscribe() {
+    const stock = document.getElementById("stock").value.toUpperCase();
+    if (stock) {
+        socket.emit('subscribe', { stock: stock });
+        document.getElementById("prices").innerHTML = "";
+    }
+}
+
+// Listen for stock updates
+socket.on('stock_update', function(data) {
+    prices[data.stock] = data.price;
+
+    let html = "";
+    for (let s in prices) {
+        html += `<li>${s} : $${prices[s]}</li>`;
+    }
+    document.getElementById("prices").innerHTML = html;
+});
 </script>
+
 </body>
 </html>
+
